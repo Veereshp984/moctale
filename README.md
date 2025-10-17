@@ -1,14 +1,16 @@
-# Auragraph — discovery, playlists & sharing UI
+# Soundwave Studio — frontend scaffold
 
-This project implements the discovery dashboard for films and music described in the ticket. It is a Vite + React + TypeScript single-page application that lets people:
+This repository contains a Vite + React + TypeScript starter that establishes a core UI foundation for the Soundwave Studio experience. It ships with routing, state management, mocked data fetching, and a responsive navigation shell covering the key surface areas (auth, discovery, playlists, profile).
 
-- Browse combined discovery surfaces for curated films and music with filtering and search.
-- Build and manage a hybrid playlist with ordering controls and metadata editing.
-- Toggle public access, copy/share links, and expose a public read-only playlist page.
-- View personalised recommendations driven by the tones present in the playlist.
-- Exercise an end-to-end happy path through Cypress smoke tests.
+Key ingredients:
 
-The experience is backed by a lightweight mock catalogue and simulated network calls so it behaves like an integrated frontend while remaining self-contained inside this repository.
+- **Vite + React + TypeScript** for a fast development workflow.
+- **React Router** with a shell layout and placeholder screens for each primary route.
+- **Zustand** state store to coordinate global UI state (theme, navigation, mocked catalogue data).
+- **Axios** HTTP utilities with an opinionated wrapper and graceful error handling.
+- **Tailwind CSS** for themeable design tokens, responsive layout primitives, and shared UI components (buttons, cards, modal, loader, etc.).
+- **ESLint + Prettier** for consistent formatting and linting.
+- **Vitest + Testing Library** for unit tests, including an example around shared UI primitives.
 
 ## Getting started
 
@@ -17,39 +19,43 @@ npm install
 npm run dev
 ```
 
-Open <http://localhost:5173> to explore the experience.
+Open <http://localhost:5173> to explore the scaffolded interface.
 
 ## Available scripts
 
 - `npm run dev` – start the Vite dev server.
 - `npm run build` – type-check and build the production bundle.
-- `npm run preview` – preview the production build.
-- `npm run lint` – run ESLint across the project.
-- `npm run cy:open` – open the Cypress runner for interactive testing.
-- `npm run cy:run` / `npm run test:e2e` – execute Cypress smoke tests in headless mode.
+- `npm run preview` – preview the production build locally.
+- `npm run lint` – run ESLint across the codebase.
+- `npm run lint:fix` – run ESLint with automatic fixes.
+- `npm run format` – format the repository with Prettier.
+- `npm run test` – execute the Vitest unit tests.
+- `npm run cy:open` – open the Cypress test runner.
+- `npm run cy:run` / `npm run test:e2e` – run the Cypress smoke tests headlessly.
 
 ## Project structure
 
 ```
 src/
-  components/      // UI building blocks (layout, discovery, playlist, sharing, recommendations)
-  context/         // Playlist state management and persistence helpers
-  data/            // Mock catalogue used by the API service
-  pages/           // Top-level routed views (dashboard + public playlist)
-  services/        // API facade with simulated latency and recommendation logic
-  utils/           // Formatting helpers
-  types.ts         // Shared TypeScript types
-cypress/           // Cypress configuration and happy path test suite
+  components/
+    ui/           # Core UI primitives (buttons, cards, loaders, modal)
+  hooks/          # Custom hooks for mocked data fetching
+  layouts/        # Shared navigation shell + chrome
+  lib/            # HTTP client utilities and mocked API facades
+  pages/          # Routed pages for auth, discovery, playlists, profile, 404
+  store/          # Global Zustand store for UI + catalogue state
+  index.css       # Tailwind layers and theme tokens
+  main.tsx        # Application entry point
 ```
+
+Tailwind is configured through design tokens exposed as CSS variables, making it easy to adjust themes or expand the design system.
 
 ## Testing
 
-The repository includes a Cypress happy-path e2e spec that covers discovery, playlist management, saving, sharing, and public playlist visibility.
+Unit tests are powered by Vitest and Testing Library. Run them with:
 
 ```bash
-npm run cy:run
-# or interactively
-npm run cy:open
+npm run test
 ```
 
-The tests assume the dev server is available at `http://localhost:5173` (the default Vite port).
+The shared Testing Library setup (`src/setupTests.ts`) activates jest-dom matchers and polyfills browser APIs used by the theme resolver. A sample test for the button primitive demonstrates typical usage.
