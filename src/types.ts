@@ -52,3 +52,45 @@ export interface Recommendation {
   reason: string
   item: MediaItem
 }
+
+export interface UserPreferences {
+  primaryGenre?: string
+  primaryMood?: string
+  newsletterOptIn: boolean
+}
+
+export interface UserProfile {
+  id: string
+  email: string
+  displayName: string
+  bio?: string
+  preferences: UserPreferences
+}
+
+export interface AuthTokens {
+  accessToken: string
+  expiresAt?: string
+}
+
+export interface SignupPayload {
+  email: string
+  password: string
+  displayName: string
+  preferences?: Partial<UserPreferences>
+}
+
+export interface LoginPayload {
+  email: string
+  password: string
+}
+
+export interface ProfileUpdatePayload {
+  displayName?: string
+  bio?: string
+  preferences?: Partial<UserPreferences>
+}
+
+export interface AuthResponse {
+  user: UserProfile
+  tokens: AuthTokens
+}
