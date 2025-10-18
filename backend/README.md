@@ -73,6 +73,17 @@ By default the service reads the model from `backend/models/latest`. Override th
 
 - `GET /health` – readiness probe.
 - `GET /recommendations/{user_id}?limit=10` – returns personalised recommendations. If the user is unknown or insufficient personalised results are available, the service expands the response with popularity-based fallbacks and flags the response via `fallback_used`.
+- `GET /discovery/movies/popular?limit=10&language=en-US&region=US` – fetches trending TMDb titles mapped to internal DTOs with caching for common requests.
+- `GET /discovery/movies/search?query=tron&page=1&language=en-US` – proxies movie searches to TMDb while normalising the payload to the service schema.
+- `GET /discovery/music/popular?limit=10&market=US` – surfaces Spotify new releases as curated music picks with caching and rate limit handling.
+- `GET /discovery/music/search?query=ambient&limit=10&market=US` – performs Spotify track searches and returns streamlined music summaries.
+
+### External provider credentials
+
+Set the following environment variables before starting the API when the discovery endpoints are required:
+
+- `TMDB_API_KEY` – server-side key for The Movie Database.
+- `SPOTIFY_CLIENT_ID` / `SPOTIFY_CLIENT_SECRET` – Spotify application credentials used for the client credentials flow. Tokens are fetched and refreshed automatically.
 
 ## Testing
 

@@ -1,1 +1,1 @@
-"""Service layer exposing the recommendation API."""
+"""Service layer exposing the recommendation and content discovery APIs."""
