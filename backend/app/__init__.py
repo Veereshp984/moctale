@@ -1,1 +1,1 @@
-"""Backend application package for recommendation engine."""
+"""Backend application package for the FastAPI service."""

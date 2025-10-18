@@ -1,72 +1,85 @@
-# Soundwave Studio — frontend scaffold
+# Full-Stack Starter Kit
 
-This repository contains a Vite + React + TypeScript starter that establishes a core UI foundation for the Soundwave Studio experience. It ships with routing, state management, mocked data fetching, and a responsive navigation shell covering the key surface areas (auth, discovery, playlists, profile).
-
-Key ingredients:
-
-- **Vite + React + TypeScript** for a fast development workflow.
-- **React Router** with a shell layout and placeholder screens for each primary route.
-- **Zustand** state store to coordinate global UI state (theme, navigation, mocked catalogue data).
-- **Axios** HTTP utilities with an opinionated wrapper and graceful error handling.
-- **Tailwind CSS** for themeable design tokens, responsive layout primitives, and shared UI components (buttons, cards, modal, loader, etc.).
-- **ESLint + Prettier** for consistent formatting and linting.
-- **Vitest + Testing Library** for unit tests, including an example around shared UI primitives.
-
-## Getting started
-
-```bash
-npm install
-npm run dev
-```
-
-Open <http://localhost:5173> to explore the scaffolded interface.
-
-## Available scripts
-
-- `npm run dev` – start the Vite dev server.
-- `npm run build` – type-check and build the production bundle.
-- `npm run preview` – preview the production build locally.
-- `npm run lint` – run ESLint across the codebase.
-- `npm run lint:fix` – run ESLint with automatic fixes.
-- `npm run format` – format the repository with Prettier.
-- `npm run test` – execute the Vitest unit tests.
-- `npm run cy:open` – open the Cypress test runner.
-- `npm run cy:run` / `npm run test:e2e` – run the Cypress smoke tests headlessly.
+This repository provides a batteries-included baseline for building a modern full-stack application with a FastAPI backend and a Vite + React + TypeScript frontend. Shared tooling for linting, formatting, and CI is configured out of the box so you can focus on product development.
 
 ## Project structure
 
 ```
-src/
-  components/
-    ui/           # Core UI primitives (buttons, cards, loaders, modal)
-  hooks/          # Custom hooks for mocked data fetching
-  layouts/        # Shared navigation shell + chrome
-  lib/            # HTTP client utilities and mocked API facades
-  pages/          # Routed pages for auth, discovery, playlists, profile, 404
-  store/          # Global Zustand store for UI + catalogue state
-  index.css       # Tailwind layers and theme tokens
-  main.tsx        # Application entry point
+├── backend/        # FastAPI application + Poetry dependencies
+├── frontend/       # Vite + React + TypeScript single-page app
+├── config/         # Shared configuration documentation
+└── .github/        # Continuous integration workflows
 ```
 
-Tailwind is configured through design tokens exposed as CSS variables, making it easy to adjust themes or expand the design system.
+## Prerequisites
 
-## Testing
+- **Python** 3.11+
+- **Poetry** for Python dependency management ([installation guide](https://python-poetry.org/docs/#installation))
+- **Node.js** 18.17+ and **npm** 9+
 
-Unit tests are powered by Vitest and Testing Library. Run them with:
+## Backend setup
 
 ```bash
-npm run test
+cd backend
+poetry install
+poetry run uvicorn app.main:app --reload
 ```
 
-The shared Testing Library setup (`src/setupTests.ts`) activates jest-dom matchers and polyfills browser APIs used by the theme resolver. A sample test for the button primitive demonstrates typical usage.
+The FastAPI server will be available on <http://localhost:8000>. API routes are mounted under `/api` (see `app/api/routes.py`).
 
-## Recommendation backend
+### Backend tooling
 
-A TensorFlow-powered collaborative filtering backend now lives under `backend/`. It ships with:
+- `poetry run ruff check app` – lint with Ruff
+- `poetry run black app` – format with Black
+- `poetry run pytest` – run backend tests (tests folder ready for expansion)
 
-- A data ingestion pipeline for normalising interaction events.
-- A training script for producing `model.keras` + `metadata.json` artifacts.
-- A FastAPI service exposing `/recommendations/{user_id}` with fallback logic.
-- Pytest coverage for the data prep utilities and a smoke test for the inference API.
+### Backend environment variables
 
-Refer to [`backend/README.md`](backend/README.md) for detailed setup, retraining, and execution instructions.
+Copy the example file and adjust values as needed:
+
+```bash
+cp backend/.env.example backend/.env
+```
+
+Key variables:
+
+- `MONGODB_URI` – connection string for MongoDB (Motor client)
+- `SECRET_KEY` / `ALGORITHM` / `ACCESS_TOKEN_EXPIRE_MINUTES` – authentication settings
+- `PROJECT_NAME` / `API_PREFIX` – service metadata
+
+## Frontend setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The Vite dev server runs on <http://localhost:5173>. The frontend ships with routing, Zustand state management, Tailwind CSS styling, and Axios utilities ready to connect to the API (`/src/pages/Home.tsx` targets the backend health endpoint).
+
+### Frontend tooling
+
+- `npm run lint` – ESLint with TypeScript + React plugins
+- `npm run lint:fix` – ESLint with auto-fix
+- `npm run format` – Prettier formatting
+- `npm run build` – Type-check and bundle the application
+
+### Frontend environment variables
+
+Copy the example file to configure the API base URL:
+
+```bash
+cp frontend/.env.example frontend/.env.local
+```
+
+## Continuous integration
+
+A GitHub Actions workflow (`.github/workflows/ci.yml`) runs linting and build checks for both services on every push and pull request. Expand it with tests and deployment steps as the project grows.
+
+## Next steps
+
+- Add domain-specific API routes and services under `backend/app/`
+- Introduce feature modules and UI components within `frontend/src/`
+- Wire up a real database and authentication provider
+
+Happy shipping! 🚀
