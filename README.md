@@ -59,3 +59,14 @@ npm run test
 ```
 
 The shared Testing Library setup (`src/setupTests.ts`) activates jest-dom matchers and polyfills browser APIs used by the theme resolver. A sample test for the button primitive demonstrates typical usage.
+
+## Recommendation backend
+
+A TensorFlow-powered collaborative filtering backend now lives under `backend/`. It ships with:
+
+- A data ingestion pipeline for normalising interaction events.
+- A training script for producing `model.keras` + `metadata.json` artifacts.
+- A FastAPI service exposing `/recommendations/{user_id}` with fallback logic.
+- Pytest coverage for the data prep utilities and a smoke test for the inference API.
+
+Refer to [`backend/README.md`](backend/README.md) for detailed setup, retraining, and execution instructions.
