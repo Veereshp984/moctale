@@ -1,0 +1,79 @@
+{
+  "generated_at": "2025-10-18T03:02:21.786381Z",
+  "user_mapping": {
+    "u1": 0,
+    "u2": 1,
+    "u3": 2,
+    "u4": 3,
+    "u5": 4
+  },
+  "item_mapping": {
+    "track_001": 0,
+    "track_002": 1,
+    "track_003": 2,
+    "track_004": 3,
+    "track_005": 4,
+    "track_006": 5
+  },
+  "user_interactions": {
+    "u1": [
+      "track_001",
+      "track_002"
+    ],
+    "u2": [
+      "track_001",
+      "track_003"
+    ],
+    "u3": [
+      "track_002",
+      "track_004"
+    ],
+    "u4": [
+      "track_004",
+      "track_005"
+    ],
+    "u5": [
+      "track_003",
+      "track_006"
+    ]
+  },
+  "item_popularity": [
+    {
+      "item_id": "track_001",
+      "score": 2.5
+    },
+    {
+      "item_id": "track_002",
+      "score": 2.5
+    },
+    {
+      "item_id": "track_003",
+      "score": 2.5
+    },
+    {
+      "item_id": "track_004",
+      "score": 2.5
+    },
+    {
+      "item_id": "track_005",
+      "score": 1.5
+    },
+    {
+      "item_id": "track_006",
+      "score": 1.0
+    }
+  ],
+  "event_weights": {
+    "like": 1.0,
+    "playlist_add": 1.5
+  },
+  "training": {
+    "embedding_dim": 8,
+    "epochs": 5,
+    "batch_size": 16,
+    "learning_rate": 0.001,
+    "num_negatives": 2,
+    "seed": 42,
+    "num_samples": 30
+  }
+}
