@@ -1,28 +1,22 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import AuthGuard from './components/AuthGuard'
-import Layout from './components/Layout'
-import PublicOnlyGuard from './components/PublicOnlyGuard'
-import Dashboard from './pages/Dashboard'
-import Login from './pages/Login'
-import Profile from './pages/Profile'
-import PublicPlaylist from './pages/PublicPlaylist'
-import Signup from './pages/Signup'
+import AppLayout from './layouts/AppLayout'
+import AuthPage from './pages/AuthPage'
+import DiscoveryPage from './pages/DiscoveryPage'
+import NotFoundPage from './pages/NotFoundPage'
+import PlaylistsPage from './pages/PlaylistsPage'
+import ProfilePage from './pages/ProfilePage'
 
 const App = () => {
   return (
     <Routes>
-      <Route element={<Layout />}>
-        <Route element={<PublicOnlyGuard />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        </Route>
-        <Route element={<AuthGuard />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-        </Route>
-        <Route path="/playlist/:playlistId" element={<PublicPlaylist />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+      <Route element={<AppLayout />}>
+        <Route index element={<Navigate to="/discovery" replace />} />
+        <Route path="auth" element={<AuthPage />} />
+        <Route path="discovery" element={<DiscoveryPage />} />
+        <Route path="playlists" element={<PlaylistsPage />} />
+        <Route path="profile" element={<ProfilePage />} />
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
 }

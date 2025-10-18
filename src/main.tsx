@@ -1,19 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
+import App from './App'
 import './index.css'
-import App from './App.tsx'
-import { AuthProvider } from './context/AuthContext'
-import { PlaylistProvider } from './context/PlaylistContext'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <PlaylistProvider>
-          <App />
-        </PlaylistProvider>
-      </AuthProvider>
+      <App />
     </BrowserRouter>
-  </StrictMode>,
+  </React.StrictMode>,
 )
