@@ -17,6 +17,7 @@ from app.core.database import close_database, get_database, init_database
 from app.core.security import TokenDecodeError, create_access_token, hash_password, parse_token, verify_password
 from app.model.recommender import RecommendationService
 from app.schemas.auth import AuthTokenRecord, TokenResponse, UserCreate, UserLogin, UserPreferences, UserPublic
+from app.service.playlists import attach_playlist_routes
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 BACKEND_ROOT = BASE_DIR.parent
@@ -229,3 +230,4 @@ async def read_current_user(current_user: UserPublic = Depends(get_current_user)
 
 
 app.include_router(auth_router)
+attach_playlist_routes(app)
