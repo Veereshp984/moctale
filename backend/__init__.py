@@ -1,1 +1,1 @@
-"""Backend package namespace for the Soundwave Studio recommendation engine."""
+"""Backend package namespace for the starter FastAPI service."""
