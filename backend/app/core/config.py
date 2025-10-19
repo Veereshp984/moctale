@@ -13,6 +13,18 @@ class Settings(BaseModel):
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
 
+    # Discovery settings
+    tmdb_api_key: str = ""
+    tmdb_api_base: str = "https://api.themoviedb.org/3"
+
+    spotify_client_id: str = ""
+    spotify_client_secret: str = ""
+    spotify_token_url: str = "https://accounts.spotify.com/api/token"
+    spotify_api_base: str = "https://api.spotify.com/v1"
+
+    cache_ttl_seconds: int = 60
+    log_level: str = "INFO"
+
     @classmethod
     def from_environment(cls) -> "Settings":
         return cls(
@@ -26,6 +38,16 @@ class Settings(BaseModel):
                     cls.model_fields["access_token_expire_minutes"].default,
                 )
             ),
+            tmdb_api_key=os.getenv("TMDB_API_KEY", cls.model_fields["tmdb_api_key"].default),
+            tmdb_api_base=os.getenv("TMDB_API_BASE", cls.model_fields["tmdb_api_base"].default),
+            spotify_client_id=os.getenv("SPOTIFY_CLIENT_ID", cls.model_fields["spotify_client_id"].default),
+            spotify_client_secret=os.getenv(
+                "SPOTIFY_CLIENT_SECRET", cls.model_fields["spotify_client_secret"].default
+            ),
+            spotify_token_url=os.getenv("SPOTIFY_TOKEN_URL", cls.model_fields["spotify_token_url"].default),
+            spotify_api_base=os.getenv("SPOTIFY_API_BASE", cls.model_fields["spotify_api_base"].default),
+            cache_ttl_seconds=int(os.getenv("CACHE_TTL_SECONDS", cls.model_fields["cache_ttl_seconds"].default)),
+            log_level=os.getenv("LOG_LEVEL", cls.model_fields["log_level"].default),
         )
 
 
